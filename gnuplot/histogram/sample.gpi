@@ -1,0 +1,62 @@
+load '../config_qt.gpi'
+load '../histogram.gpi'
+
+#########################################
+# title setting
+#########################################
+set title ""
+
+#########################################
+# axis settings
+#########################################
+# X-axis
+set xlabel      "wire-length (um)"
+#set format x   '%.s%c'
+#set logscale x
+#set xrange     [0.4:]
+#set xtics      0.2
+#set mxtics     2
+
+# Y-axis
+set ylabel      "number of wires"
+#set format y   '%.s%c'
+#set logscale y
+#set yrange     [0:]
+#set ytics      4
+#set mytics     2
+
+#########################################
+# legend setting
+#########################################
+# box setting
+set key box reverse Left outside horizontal bottom center maxcol 3
+
+# label setting (using array)
+#array label[6]
+#label[1]="A"
+#label[2]="B"
+#label[3]="C"
+#label[4]="D"
+#label[5]="E"
+#label[6]="F"
+
+#########################################
+# graph setting
+#########################################
+set boxwidth 0.9
+
+N=`awk -F ',' 'NR==1 {print NF}' ./data/data.txt`
+# label using array
+#plot for [i=2:N] './data/data.txt' u 1:i with linespoints linestyle i-1 title label[i-1] 
+# label using columnhead
+plot for [i=2:N] './data/data2.txt' u i:xticlabels(1) linestyle i-1 title columnhead
+
+load '../config_png.gpi'
+load '../histogram.gpi'
+set output "output.png"
+replot
+
+load '../config_eps.gpi'
+load '../histogram.gpi'
+set output "output.eps"
+replot
