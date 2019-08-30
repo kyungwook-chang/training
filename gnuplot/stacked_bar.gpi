@@ -1,0 +1,9 @@
+set style data histogram
+set style histogram columnstacked
+
+set style line 1 linewidth 1
+set style line 2 linewidth 1
+set style line 3 linewidth 1
+set style line 4 linewidth 1
+set style line 5 linewidth 1
+set style line 6 linewidth 1
