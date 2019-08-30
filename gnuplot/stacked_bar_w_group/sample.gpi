@@ -45,20 +45,58 @@ set key box reverse Left outside horizontal bottom center maxcol 3
 #########################################
 set boxwidth 0.9
 
-N=`awk -F ',' 'NR==1 {print NF}' ./data/data_dct.txt`
-# label using columnhead
-#plot	newhistogram "DCT", for [i=2:N] './data/data_dct.txt' u i:xticlabels(1) linestyle i-1 title columnhead, \
-#		newhistogram "AES-128", for [i=2:N] './data/data_aes.txt' u i:xticlabels(1) linestyle i-1 title columnhead, \
-#		newhistogram "JPEG", for [i=2:N] './data/data_jpeg.txt' u i:xticlabels(1) linestyle i-1 title columnhead
+array colors[24]
+colors[1] = "black"
+colors[2] = "red"
+colors[3] = "green"
+colors[4] = "blue"
+colors[5] = "cyan"
+colors[6] = "magenta"
+colors[7] = "yellow"
+colors[8] = "olive"
+colors[9] = "navy"
+colors[10] = "dark-violet"
+colors[11] = "dark-red"
+colors[12] = "dark-green"
+colors[13] = "dark-cyan"
+colors[14] = "dark-blue"
+colors[15] = "dark-orange"
+colors[16] = "purple"
+colors[17] = "dark-pink"
+colors[18] = "white"
+colors[19] = "grey70"
+colors[20] = "grey40"
+colors[21] = "beige"
+colors[22] = "light-turquoise"
+colors[23] = "light-pink"
+colors[24] = "grey20"
+
+# # columnstacked has a problem with color consistency across newhistogram
+# plot	newhistogram "DCT", \
+# 			'./data/data_dct.txt' u 2:key(1) linestyle 1 title columnhead, \
+# 			'' u 3 linestyle 2 title columnhead, \
+# 		newhistogram "AES-128", \
+# 			'./data/data_aes.txt' u 2 linestyle 1 title "", \
+# 			'' u 3 linestyle 2 title "", \
+# 		newhistogram "JPEG", \
+# 			'./data/data_jpeg.txt' u 2 linestyle 1 title "", \
+# 			'' u 3 linestyle 2 title ""
+
+# rowstacked
 plot	newhistogram "DCT", \
-			'./data/data_dct.txt' u 2:xticlabels(1) linestyle 1 title "2D", \
-			'' u 3:xticlabels(1) linestyle 2 title "M3D", \
+			for [i=2:7] './data/data_dct_transpose.txt' u i:xticlabels(1) title columnhead linecolor rgb colors[i-1], \
+			for [i=8:12] './data/data_dct_transpose.txt' u i:xticlabels(1) title columnhead linecolor rgb colors[i-6] fs pattern 1, \
 		newhistogram "AES-128", \
-			'./data/data_aes.txt' u 2:xticlabels(1) linestyle 1 title "", \
-			'' u 3:xticlabels(1) linestyle 2 title "", \
+			for [i=2:7] './data/data_aes_transpose.txt' u i:xticlabels(1) notitle linecolor rgb colors[i-1], \
+			for [i=8:12] './data/data_aes_transpose.txt' u i:xticlabels(1) notitle linecolor rgb colors[i-6] fs pattern 1, \
 		newhistogram "JPEG", \
-			'./data/data_jpeg.txt' u 2:xticlabels(1) linestyle 1 title "", \
-			'' u 3:xticlabels(1) linestyle 2 title ""
+			for [i=2:7] './data/data_jpeg_transpose.txt' u i:xticlabels(1) notitle linecolor rgb colors[i-1], \
+			for [i=8:12] './data/data_jpeg_transpose.txt' u i:xticlabels(1) notitle linecolor rgb colors[i-6] fs pattern 1
+
+#plot	newhistogram "DCT", \
+#			'./data/data_dct_transpose.txt' u 2:xticlabels(1) title columnhead linecolor rgb colors[1], \
+#			'./data/data_dct_transpose.txt' u 3:xticlabels(1) title columnhead linecolor rgb colors[2], \
+#			'./data/data_dct_transpose.txt' u 4:xticlabels(1) title columnhead linecolor rgb colors[3], \
 
 load '../config_png.gpi'
 load '../stacked_bar.gpi'

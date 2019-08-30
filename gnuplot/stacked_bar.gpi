@@ -1,5 +1,7 @@
 set style data histogram
-set style histogram columnstacked
+# columnstacked has a problem with color consistency across newhistogram
+set style histogram rowstacked
+#set key autotitle columnheader
 
 set style line 1 linewidth 1
 set style line 2 linewidth 1
