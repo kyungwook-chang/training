@@ -1,0 +1,71 @@
+load '../config_qt.gpi'
+load '../stacked_bar.gpi'
+
+#########################################
+# title setting
+#########################################
+set title ""
+
+#########################################
+# axis settings
+#########################################
+# X-axis
+#set xlabel      ""
+#set format x   '%.s%c'
+#set logscale x
+#set xrange     [0.4:]
+#set xtics      0.2
+#set mxtics     2
+
+# Y-axis
+set ylabel      "static voltage drop (mV)"
+#set format y   '%.s%c'
+#set logscale y
+#set yrange     [0:]
+#set ytics      4
+#set mytics     2
+
+#########################################
+# legend setting
+#########################################
+# box setting
+set key box reverse Left outside horizontal bottom center maxcol 3
+
+# label setting (using array)
+#array label[6]
+#label[1]="A"
+#label[2]="B"
+#label[3]="C"
+#label[4]="D"
+#label[5]="E"
+#label[6]="F"
+
+#########################################
+# graph setting
+#########################################
+set boxwidth 0.9
+
+N=`awk -F ',' 'NR==1 {print NF}' ./data/data_dct.txt`
+# label using columnhead
+#plot	newhistogram "DCT", for [i=2:N] './data/data_dct.txt' u i:xticlabels(1) linestyle i-1 title columnhead, \
+#		newhistogram "AES-128", for [i=2:N] './data/data_aes.txt' u i:xticlabels(1) linestyle i-1 title columnhead, \
+#		newhistogram "JPEG", for [i=2:N] './data/data_jpeg.txt' u i:xticlabels(1) linestyle i-1 title columnhead
+plot	newhistogram "DCT", \
+			'./data/data_dct.txt' u 2:xticlabels(1) linestyle 1 title "2D", \
+			'' u 3:xticlabels(1) linestyle 2 title "M3D", \
+		newhistogram "AES-128", \
+			'./data/data_aes.txt' u 2:xticlabels(1) linestyle 1 title "", \
+			'' u 3:xticlabels(1) linestyle 2 title "", \
+		newhistogram "JPEG", \
+			'./data/data_jpeg.txt' u 2:xticlabels(1) linestyle 1 title "", \
+			'' u 3:xticlabels(1) linestyle 2 title ""
+
+load '../config_png.gpi'
+load '../stacked_bar.gpi'
+set output "output.png"
+replot
+
+load '../config_eps.gpi'
+load '../stacked_bar.gpi'
+set output "output.eps"
+replot

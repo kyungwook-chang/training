@@ -1,0 +1,19 @@
+set terminal postscript eps font "Arial,25" size 5in, 4.5in
+set colorsequence classic
+set datafile separator ','
+set size ratio 0.8
+
+set style line 1 linewidth 8 pointtype 5 pointsize 2.15
+set style line 2 linewidth 8 pointtype 7 pointsize 2.5
+set style line 3 linewidth 8 pointtype 9 pointsize 3.2
+set style line 4 linewidth 8 pointtype 11 pointsize 3.2
+set style line 5 linewidth 8 pointtype 13 pointsize 3.2
+set style line 6 linewidth 8 pointtype 15 pointsize 3
+
+set style line 101 linewidth 1.0 dashtype 1 linecolor rgb 'gray'
+set style line 102 linewidth 1.0 dashtype 3 linecolor rgb 'gray'
+
+set style fill solid border lt -1
+
+set grid xtics ytics mxtics linestyle 101, linestyle 101, linestyle 102
+
